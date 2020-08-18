@@ -2,34 +2,16 @@ var express     = require("express");
 var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
+var Campground  = require("./models/campground");
+var seedDB      = require("./seeds");
+
 
 mongoose.connect("mongodb://localhost/yelp_camp"); //This will create a database inside mongoDB
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+seedDB();
 
-// SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-	name: String,
-	image: String,
-	description: String
-});
 
-//Make a model which uses campgroundSchema so that we can use various mongoDB methods
-var Campground = mongoose.model("Campground", campgroundSchema);
-
-// Campground.create(
-// 	{
-// 		name: "Granite Hill", 
-// 		image: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60",
-// 		description: "This is a huge granite hill, no bathrooms, no water. Beautiful Granite!"
-// 	}, function(err, campground){
-// 		if(err){
-// 			console.log(err);
-// 		} else {
-// 			console.log("Newly created campground: ");
-// 			console.log(campground);
-// 		}
-// 	});
 
 app.get("/", function(req, res){
 	res.render("landing");
@@ -76,10 +58,11 @@ app.get("/campgrounds/new", function(req, res){
 app.get("/campgrounds/:id", function(req, res){
 	//Find the campground with provided id
 	// Campground.findById is an mongoose command
-	Campground.findById(req.params.id, function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
 		if(err){
 			console.log(err);
 		} else {
+			console.log(foundCampground);
 			//Render show template with that campground
 			res.render("show", {campground: foundCampground});
 		}
