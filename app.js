@@ -11,6 +11,7 @@ var seedDB      = require("./seeds");
 mongoose.connect("mongodb://localhost/yelp_camp"); //This will create a database inside mongoDB
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname+"/public"));  //dirname refers to the directry the script lives in
 seedDB();
 
 
