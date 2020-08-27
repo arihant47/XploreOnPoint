@@ -9,3 +9,10 @@
 .thumbnail .caption-full{
 	padding: 12px;
 }
+
+#delete-campground-form{
+	display: inline;
+}
+#delete-comment-form{
+	display: inline;
+}
