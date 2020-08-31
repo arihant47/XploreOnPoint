@@ -17,7 +17,17 @@ var campgroundRoutes = require("./routes/campgrounds");
 var indexRoutes       = require("./routes/index");
 
 
-mongoose.connect("mongodb://localhost/yelp_camp"); //This will create a database inside mongoDB
+// mongoose.connect("mongodb://localhost/yelp_camp"); //This will create a database inside mongoDB
+mongoose.connect("mongodb+srv://Arihant247829:Arihant247829DB@cluster0.lkipt.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
+	useNewUrlParser: true,
+	useCreateIndex: true
+}).then(() => {
+	console.log('Connected to DB!');
+}).catch(err => {
+	console.log('ERROR:', err.message);
+});
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname+"/public"));  //dirname refers to the directry the script lives in
@@ -25,6 +35,7 @@ app.use(methodOverride("_method"));
 app.use(flash());
 // seedDB(); // Seed the database
 
+app.locals.moment = require('moment');
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
@@ -51,6 +62,12 @@ app.use("/campgrounds", campgroundRoutes); //This will append /campgrounds to al
 app.use("/campgrounds/:id/comments", commentRoutes);
 
 
-app.listen(3000, function(){
-	console.log("The YelpCamp Server has started");
+// app.listen(3000, function(){
+// 	console.log("The YelpCamp Server has started");
+// });
+
+//This is the listening port for heroku
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
