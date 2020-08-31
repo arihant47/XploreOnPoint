@@ -1,7 +1,11 @@
 <%- include("../partials/header") %> 
 <!-- .. represents one folder/level back just like cd.. -->
 
-<div class="container">
+<% if(currentUser && currentUser.isAdmin) { %>
+	<h3>You're an admin!</h3>
+<% } %>
+
+<!-- <div class="container"> -->
 	<header class="jumbotron"> 
 		<div class="container">
 			<h1>Welcome to YelpCamp!</h1>
@@ -30,6 +34,6 @@
 			</div>
 		<% }); %>
 	</div>
-</div>
+<!-- </div> -->
 
 <%- include("../partials/footer") %>
