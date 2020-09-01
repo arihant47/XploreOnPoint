@@ -18,7 +18,8 @@ var indexRoutes       = require("./routes/index");
 
 
 // mongoose.connect("mongodb://localhost/yelp_camp"); //This will create a database inside mongoDB
-mongoose.connect("mongodb+srv://Arihant247829:Arihant247829DB@cluster0.lkipt.mongodb.net/yelp_camp?retryWrites=true&w=majority", {
+// mongoose.connect("MongoDB URI here", ... 
+mongoose.connect("mongodb+srv://ArihantXXXX:Arihant2XXXB@cluster0.lkipt.mongodb.net/yelp_camp?retryWrites=true&w=majority", { 
 	useNewUrlParser: true,
 	useCreateIndex: true
 }).then(() => {
